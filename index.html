@@ -1,0 +1,49 @@
+<html ng-app="sampleApp">
+  <head>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular.min.js"></script>
+    <script src="https://cdn.firebase.com/js/client/2.2.4/firebase.js"></script>
+    <script src="https://cdn.firebase.com/libs/angularfire/1.1.2/angularfire.min.js"></script>
+    <script src="app.js"></script>
+<style>
+table, th, td {
+    border: 1px solid black;
+}
+</style>
+
+  </head>
+
+  <body ng-controller="SampleCtrl">
+   {{messages}}
+   <hr>
+ <!--  <H1>ALL date : {{val}}</H1>
+   <H1>Age : {{val.age}}</H1>
+   {{path}}
+ <h1>val3 {{val3}}</h1>
+      <h1>val4.Date = {{mydateVal}}</h1>
+      <!-- Hello {{val3.Locations.Jeddah.Transfers}}
+      -->
+      <li ng-repeat="(l,v) in val3.Locations">
+         {{l}}
+          <input ng-model="v.Transfers" type="hidden">
+          <hr>
+<table>
+    <tr class="transfers">
+       <th scope="col" title="Date">Date</th>
+       <th scope="col" title="From">From</th>
+       <th scope="col" title="Quantity">Quantity</th>
+       <th scope="col" title="To">To</th>
+       <th scope="col" title="TransID">TransID</th>
+     </tr>
+  <tr ng-repeat="tr in v.Transfers">
+    <td>{{ tr.Date }}</td>
+    <td>{{ tr.From }}</td>
+      <td>{{ tr.Quantity }}</td>
+      <td>{{ tr.To }}</td>
+      <td>{{ tr.TransID }}</td>
+  </tr>
+</table>
+      
+    </li>
+      
+  </body>
+</html>
