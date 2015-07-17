@@ -1,0 +1,55 @@
+<html ng-app="sampleApp">
+
+<head>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular.min.js"></script>
+    <script src="https://cdn.firebase.com/js/client/2.2.4/firebase.js"></script>
+    <script src="https://cdn.firebase.com/libs/angularfire/1.1.2/angularfire.min.js"></script>
+    <script src="prodList.js"></script>
+    <style>
+        table,
+        th,
+        td {
+            border: 1px solid black;
+        }
+    </style>
+
+</head>
+
+<body class="blurBg-false" style="background-color:#EBEBEB" ng-controller="ListCtrl">
+    <hr>
+ 
+        <br>Products List:
+
+        <table>
+            <tr class="products">
+                <th scope="col" title="Name">Name</th>
+                <th scope="col" title="Description">Description</th>
+                <th scope="col" title="Stock">Stock</th>
+                <th scope="col" title="Location">Locations</th>                
+            </tr>
+            <tr ng-repeat="(p,d) in productsList">
+                <td>{{ p }}</td>
+                <td>{{ d.Description }}</td>
+                <td>{{ d.Stock }}</td>
+                <input ng-model="d" type="hidden">
+                <td>
+                    <div ng-repeat="(pp,dd) in d.Locations">
+                    <a href="#" ng-model="collapsed" ng-click="collapsed=!collapsed">{{ pp }}</a>
+                    
+                        <div ng-repeat="(ppp,ddd) in dd.Transfers">
+                        
+                             <div ng-show="collapsed"><li>{{ ppp }} | Quantity:  <!--{{ ddd }}--> {{ ddd.Quantity }}</li></div>
+                            </tr>
+                        </div>
+
+                    </div>
+                </td>
+             
+            </tr>
+        </table>
+        <hr>
+
+
+</body>
+
+</html>

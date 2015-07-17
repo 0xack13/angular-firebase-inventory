@@ -1,0 +1,36 @@
+<html ng-app="sampleApp">
+  <head>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular.min.js"></script>
+    <script src="https://cdn.firebase.com/js/client/2.2.4/firebase.js"></script>
+    <script src="https://cdn.firebase.com/libs/angularfire/1.1.2/angularfire.min.js"></script>
+    <script src="Add.js"></script>
+
+
+  </head>
+
+  <body ng-controller="AddCtrl">
+   <hr>
+   <h1>User type : {{userType}}</h1>
+    
+      <form ng-submit="submit()" ng-controller="AddCtrl">
+  
+        Date :
+        <input type="text" ng-model="tDate" name="tDate" />
+        <br>
+        From :<input type="text" ng-model="tFrom" name="tFrom" />
+        <br>
+        Quantity:<input type="text" ng-model="tQuantity" name="tQuantity" />
+        <br>
+        To:<input type="text" ng-model="tTo" name="tTo" />
+        <br>
+        TransID:<input type="text" ng-model="TransID" name="TransID" />
+        <br>
+  <input type="submit" id="submit" value="submit" />
+  
+</form>
+    
+   <hr>
+
+      
+  </body>
+</html>

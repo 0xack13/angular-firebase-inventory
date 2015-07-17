@@ -1,0 +1,100 @@
+{
+  "Product" : {
+    "PID" : "001",
+    "Prod1" : {
+      "Description" : "nice product",
+      "Locations" : {
+        "Jeddah" : {
+          "Transfers" : {
+            "Transfer1" : {
+              "Date" : "2/1/2015",
+              "From" : "Jeddah",
+              "Quantity" : 33,
+              "To" : "Taief",
+              "TransID" : "001"
+            },
+            "Transfer2" : {
+              "Date" : "2/2/2015",
+              "From" : "Taif",
+              "Quantity" : 77,
+              "To" : "Makkah",
+              "TransID" : "002"
+            }
+          }
+        },
+        "Riyadh" : {
+          "Transfers" : {
+            "Transfer1" : {
+              "Date" : "1/1/2015",
+              "From" : "Jeddah",
+              "Quantity" : 33,
+              "To" : "Riyadh",
+              "TransID" : "001"
+            }
+          }
+        },
+        "Taif" : {
+          "Transfers" : {
+            "Transfer1" : {
+              "Date" : "1/1/2015",
+              "From" : "Taif",
+              "Quantity" : 66,
+              "To" : "Riyadh",
+              "TransID" : "001"
+            },
+            "Transfer2" : {
+              "Date" : "5/5/2014",
+              "From" : "Taif",
+              "Quantity" : 92,
+              "To" : "Jeddah",
+              "TransID" : "004"
+            }
+          }
+        }
+      }
+    }
+  },
+  "midle" : "Wilma",
+  "user" : {
+    "user1" : {
+      "age" : "28",
+      "password" : "password",
+      "test" : "test 123",
+      "user1" : "Saleh Albatati 9999"
+    },
+    "user3" : {
+      "-JtXm-urYUhSZl7jyQMh" : {
+        "last" : "Announcing COBOL, a New Programming Language",
+        "name" : "gracehop"
+      },
+      "-JtY94E5opLqL2eadxCT" : {
+        "last" : "Announcing COBOL, a New Programming Language",
+        "name" : "gracehop"
+      },
+      "-JtYGCpfTFNZuW0n5Azr" : {
+        "last" : "Announcing COBOL, a New Programming Language",
+        "name" : "gracehop"
+      },
+      "-JtYGuExw8sc4WUx9Rhl" : {
+        "last" : "Announcing COBOL, a New Programming Language",
+        "name" : "gracehop"
+      },
+      "-JtYH2Vdri-mHaF6beXJ" : {
+        "last" : "Announcing COBOL, a New Programming Language",
+        "name" : "gracehop"
+      },
+      "-JtYHBBbUQpyLShIaNqe" : {
+        "last" : "Announcing COBOL, a New Programming Language",
+        "name" : "gracehop"
+      },
+      "-JtYHLxRNirCRzbCPD_f" : {
+        "last" : "Announcing COBOL, a New Programming Language",
+        "name" : "gracehop"
+      },
+      "name1" : {
+        "last" : "ss3"
+      }
+    }
+  },
+  "z1" : "Ali Alhamed"
+}

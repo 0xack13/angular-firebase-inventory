@@ -12,8 +12,8 @@ table, th, td {
 
   </head>
 
-  <body ng-controller="SampleCtrl">
-   {{messages}}
+  <body class="blurBg-false" style="background-color:#EBEBEB" ng-controller="SampleCtrl">
+   <!-- {{messages}} -->
    <hr>
  <!--  <H1>ALL date : {{val}}</H1>
    <H1>Age : {{val.age}}</H1>
@@ -23,9 +23,10 @@ table, th, td {
       <!-- Hello {{val3.Locations.Jeddah.Transfers}}
       -->
       <li ng-repeat="(l,v) in val3.Locations">
-         {{l}}
+         <h2>Branch Name: {{l}} </h2> Stock Count:{{v.stock}}
           <input ng-model="v.Transfers" type="hidden">
-          <hr>
+          <br>Transfer log:
+          
 <table>
     <tr class="transfers">
        <th scope="col" title="Date">Date</th>
@@ -42,8 +43,9 @@ table, th, td {
       <td>{{ tr.TransID }}</td>
   </tr>
 </table>
-      
+      <hr>
     </li>
+      Total stock per product: {{totStock}}
       
   </body>
 </html>
