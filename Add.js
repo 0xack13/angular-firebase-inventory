@@ -6,18 +6,18 @@ app.controller("AddCtrl", function ($scope, $firebaseArray) {
     $scope.messages = $firebaseArray(ref);
     $scope.userType = "guest123";
     
-    var item = {
+    /*var item = {
         user1: "user11",
         test: "test 111",
         age: "111",
         newage: 34344
-    };
+    };*/
 
     //Update the "user1" child node with the new item json structure
-    console.log(ref.child('user').child("user1").update(item));
+    //console.log(ref.child('user').child("user1").update(item));
     
     //Remove the user1 node "complete node"
-    ref.child('user').child("user1").remove();
+    //ref.child('user').child("user1").remove();
 
     /*
     var pushRef = ref.child("user/user1");

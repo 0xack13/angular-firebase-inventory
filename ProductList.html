@@ -15,7 +15,8 @@
 
 </head>
 
-<body class="blurBg-false" style="background-color:#EBEBEB" ng-controller="ListCtrl">
+<body class="blurBg-false" style="background-color:#EBEBEB">
+    <div  ng-controller="ListCtrl">
     <hr>
  
         <br>Products List:
@@ -48,8 +49,33 @@
             </tr>
         </table>
         <hr>
+        </div>
 
 
-</body>
+<div ng-controller="addCtrl">
+   <hr>
+   <h1>User type : {{userType}}</h1>
+    
+      <form ng-submit="submit()" ng-controller="addCtrl">
+  
+        Date :
+        <input type="text" ng-model="tDate" name="tDate" />
+        <br>
+        From :<input type="text" ng-model="tFrom" name="tFrom" />
+        <br>
+        Quantity:<input type="text" ng-model="tQuantity" name="tQuantity" />
+        <br>
+        To:<input type="text" ng-model="tTo" name="tTo" />
+        <br>
+        TransID:<input type="text" ng-model="TransID" name="TransID" />
+        <br>
+  <input type="submit" id="submit" value="submit" />
+  
+</form>
+    
+   <hr>
+
+      
+  </body>
 
 </html>
