@@ -34,10 +34,19 @@ var ListCtrl = app.controller("ListCtrl", function ($scope, $firebaseArray) {
 
 var addCtrl = app.controller("addCtrl", function ($scope, $firebaseArray) {
      var ref = new Firebase("https://inven.firebaseio.com");
+     var productsList;
 
     $scope.messages = $firebaseArray(ref);
-    $scope.userType = "guest123";
     
+    ref.child("Product").on("value", function (snapshot) {
+
+    $scope.productsList = snapshot.val();
+    console.log($scope.productsList);
+    $scope.messages = $firebaseArray(ref);
+    $scope.userType = "guest123";
+    });
+
+    console.log("Products are: " + $scope.productsList);
     /*
     var item = {
         user1: "user11",
@@ -66,9 +75,10 @@ var addCtrl = app.controller("addCtrl", function ($scope, $firebaseArray) {
         var tQuantity = $scope.tQuantity;
         var tTo = $scope.tTo;
         var TransID = $scope.TransID;
+        var tProduct = $scope.tProduct;
         console.log("tDate:" + tDate);
         if ($scope.tDate) {
-            var stockRef = ref.child("Product/Prod1/Locations/Jeddah/Transfers/");
+            var stockRef = ref.child("Product/" + tProduct + "/Locations/" + tFrom + "/Transfers/");
             var tDate = $scope.tDate;
             stockRef.push({
                 "Date": tDate,

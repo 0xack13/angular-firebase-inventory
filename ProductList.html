@@ -52,29 +52,33 @@
         </div>
 
 
-<div ng-controller="addCtrl">
-   <hr>
-   <h1>User type : {{userType}}</h1>
-    
-      <form ng-submit="submit()" ng-controller="addCtrl">
-  
-        Date :
-        <input type="text" ng-model="tDate" name="tDate" />
-        <br>
-        From :<input type="text" ng-model="tFrom" name="tFrom" />
-        <br>
-        Quantity:<input type="text" ng-model="tQuantity" name="tQuantity" />
-        <br>
-        To:<input type="text" ng-model="tTo" name="tTo" />
-        <br>
-        TransID:<input type="text" ng-model="TransID" name="TransID" />
-        <br>
-  <input type="submit" id="submit" value="submit" />
-  
-</form>
-    
-   <hr>
-
+    <div ng-controller="addCtrl">
+       <hr>
+       <h1>User type : {{userType}}</h1>
+        
+          <form ng-submit="submit()" ng-controller="addCtrl">
+      
+            Date :
+            <input type="text" ng-model="tDate" name="tDate" />
+            <br>
+            From :<input type="text" ng-model="tFrom" name="tFrom" />
+            <br>
+            Quantity:<input type="text" ng-model="tQuantity" name="tQuantity" />
+            <br>
+            To:<input type="text" ng-model="tTo" name="tTo" />
+            <br>
+            TransID:<input type="text" ng-model="TransID" name="TransID" />
+            <br>
+            Product Name:
+            <select data-ng-model="tProduct"
+                data-ng-options="k for (k,v) in productsList">                
+            </select>
+      <input type="submit" id="submit" value="submit" />
+      
+    </form>
+        
+       <hr>
+    </div>
       
   </body>
 
