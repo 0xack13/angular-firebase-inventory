@@ -37,6 +37,10 @@ var addCtrl = app.controller("addCtrl", function ($scope, $firebaseArray) {
      var productsList;
 
     $scope.messages = $firebaseArray(ref);
+
+    $scope.selectAction = function() {
+        console.log($scope.myOption);
+    };
     
     ref.child("Product").on("value", function (snapshot) {
 
@@ -46,7 +50,6 @@ var addCtrl = app.controller("addCtrl", function ($scope, $firebaseArray) {
     $scope.userType = "guest123";
     });
 
-    console.log("Products are: " + $scope.productsList);
     /*
     var item = {
         user1: "user11",

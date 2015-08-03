@@ -69,9 +69,9 @@
             <br>
             TransID:<input type="text" ng-model="TransID" name="TransID" />
             <br>
-            Product Name:
-            <select data-ng-model="tProduct"
-                data-ng-options="k for (k,v) in productsList">                
+            Product Name .. {{ tProduct }}:
+            <select data-ng-model="tProduct" ng-change="selectAction()" 
+                data-ng-options="k as k for (k,v) in productsList" value="{{k}}">                
             </select>
       <input type="submit" id="submit" value="submit" />
       
