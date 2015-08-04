@@ -1,34 +1,77 @@
 <html ng-app="sampleApp">
+<!-- Optional theme -->
 
 <head>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular.min.js"></script>
     <script src="https://cdn.firebase.com/js/client/2.2.4/firebase.js"></script>
     <script src="https://cdn.firebase.com/libs/angularfire/1.1.2/angularfire.min.js"></script>
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
+
     <script src="prodList.js"></script>
-    <style>
-        table,
-        th,
-        td {
-            border: 1px solid black;
-        }
-    </style>
 
 </head>
 
-<body class="blurBg-false" style="background-color:#EBEBEB">
-    <div  ng-controller="ListCtrl">
+<body>
+
+<div ng-controller="ListCtrl">
+    <!-- Fixed navbar -->
+    <nav class="navbar navbar-default navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <!-- The mobile navbar-toggle button can be safely removed since you do not need it in a non-responsive implementation -->
+          <a class="navbar-brand" href="#">Project name</a>
+        </div>
+        <!-- Note that the .navbar-collapse and .collapse classes have been removed from the #navbar -->
+        <div id="navbar">
+          <ul class="nav navbar-nav">
+            <li class="active"><a href="#">Home</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#contact">Contact</a></li>
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
+              <ul class="dropdown-menu">
+                <li><a href="#">Action</a></li>
+                <li><a href="#">Another action</a></li>
+                <li><a href="#">Something else here</a></li>
+                <li role="separator" class="divider"></li>
+                <li class="dropdown-header">Nav header</li>
+                <li><a href="#">Separated link</a></li>
+                <li><a href="#">One more separated link</a></li>
+              </ul>
+            </li>
+          </ul>
+          <form class="navbar-form navbar-left" role="search">
+            <div class="form-group">
+              <input type="text" class="form-control" placeholder="Search" ng-model="query">
+            </div>
+            <button type="submit" class="btn btn-default">Submit</button>
+          </form>
+          <ul class="nav navbar-nav navbar-right">
+            <li><a href="#">Link</a></li>
+            <li><a href="#">Link</a></li>
+            <li><a href="#">Link</a></li>
+          </ul>
+        </div><!--/.nav-collapse -->
+      </div>
+    </nav>
+
+    <div class="container">
     <hr>
  
         <br>Products List:
 
-        <table>
+        <table class="table">
             <tr class="products">
                 <th scope="col" title="Name">Name</th>
                 <th scope="col" title="Description">Description</th>
                 <th scope="col" title="Stock">Stock</th>
                 <th scope="col" title="Location">Locations</th>                
             </tr>
-            <tr ng-repeat="(p,d) in productsList">
+            <tr ng-repeat="(p,d) in productsList |  toArray | filter:query">
                 <td>{{ p }}</td>
                 <td>{{ d.Description }}</td>
                 <td>{{ d.Stock }}</td>
@@ -49,37 +92,42 @@
             </tr>
         </table>
         <hr>
+
+        </div>
         </div>
 
-
-    <div ng-controller="addCtrl">
+    <div ng-controller="addCtrl" class="container">
        <hr>
        <h1>User type : {{userType}}</h1>
-        
-          <form ng-submit="submit()" ng-controller="addCtrl">
+        <div class="form-group">
+          <form ng-submit="submit()" ng-controller="addCtrl" class="form-group">
       
             Date :
-            <input type="text" ng-model="tDate" name="tDate" />
+            <input class="form-control" type="text" ng-model="tDate" name="tDate" />
             <br>
-            From :<input type="text" ng-model="tFrom" name="tFrom" />
+            From :<select class="form-control"  data-ng-model="tFrom" ng-change="selectAction()" name="tFrom" data-ng-options="kCity as kCity for (kCity, vProduct) in cities" value="{{kCity}}">                
+            </select>
             <br>
-            Quantity:<input type="text" ng-model="tQuantity" name="tQuantity" />
+            Quantity:<input type="text" class="form-control"  ng-model="tQuantity" name="tQuantity" />
             <br>
-            To:<input type="text" ng-model="tTo" name="tTo" />
+            To:<select class="form-control"  data-ng-model="tTo" ng-change="selectAction()" name="tTo" 
+                data-ng-options="kToCity as kToCity for (kToCity, vToCity) in cities" value="{{kToCity}}">
+            </select>
             <br>
-            TransID:<input type="text" ng-model="TransID" name="TransID" />
+            TransID:<input type="text" class="form-control"  ng-model="TransID" name="TransID" />
             <br>
             Product Name .. {{ tProduct }}:
-            <select data-ng-model="tProduct" ng-change="selectAction()" 
-                data-ng-options="k as k for (k,v) in productsList" value="{{k}}">                
+            <select data-ng-model="tProduct" class="form-control" ng-change="selectAction()" 
+                data-ng-options="kProduct as kProduct for (kProduct,vProduct) in productsList" value="{{kProduct}}">                
             </select>
-      <input type="submit" id="submit" value="submit" />
+            <br>
+      <input type="submit" id="submit" value="submit"  class="btn btn-lg btn-success" />
       
     </form>
-        
+        <div>
        <hr>
     </div>
-      
+      </div>
   </body>
 
 </html>

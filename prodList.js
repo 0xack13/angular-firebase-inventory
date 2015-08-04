@@ -11,11 +11,15 @@ Multiple Controllers:
 */
 
 //Creating multpile controllers for each function
-var ListCtrl = app.controller("ListCtrl", function ($scope, $firebaseArray) {
+app.controller("ListCtrl", function ($scope, $firebaseArray) {
     var productsList;
+    $scope.query = '';
     var ref = new Firebase("https://inven.firebaseio.com");
 
     $scope.messages = $firebaseArray(ref);
+
+   
+
 
     ref.child("Product").on("value", function (snapshot) {
 
@@ -29,25 +33,43 @@ var ListCtrl = app.controller("ListCtrl", function ($scope, $firebaseArray) {
                        );
         });
     });
+
+})
+.filter('toArray', function () {
+    'use strict';
+
+    return function (obj) {
+        if (!(obj instanceof Object)) {
+            return obj;
+        }
+
+        return Object.keys(obj).map(function (key) {
+            return Object.defineProperty(obj[key], '$key', {__proto__: null, value: key});
+        });
+    }
 });
 
 
 var addCtrl = app.controller("addCtrl", function ($scope, $firebaseArray) {
      var ref = new Firebase("https://inven.firebaseio.com");
-     var productsList;
+     var productsList, kCity;
 
     $scope.messages = $firebaseArray(ref);
 
     $scope.selectAction = function() {
-        console.log($scope.myOption);
+        console.log($scope.tFrom);
     };
     
     ref.child("Product").on("value", function (snapshot) {
+        $scope.productsList = snapshot.val();
+        console.log($scope.productsList);
+        $scope.messages = $firebaseArray(ref);
+        $scope.userType = "guest123";
+    });
 
-    $scope.productsList = snapshot.val();
-    console.log($scope.productsList);
-    $scope.messages = $firebaseArray(ref);
-    $scope.userType = "guest123";
+    ref.child("Cities").on("value", function (snapshot) {
+        $scope.cities = snapshot.val();
+        console.log($scope.cities.id);
     });
 
     /*
@@ -72,6 +94,12 @@ var addCtrl = app.controller("addCtrl", function ($scope, $firebaseArray) {
         age: "286"
     });
     */
+
+    $scope.filterToCity = function (kToCity) {
+        console.log("Filter: " + kToCity);
+        return "Hello";
+    }
+
     $scope.submit = function () {
         var tDate = $scope.tDate;
         var tFrom = $scope.tFrom;
@@ -80,7 +108,7 @@ var addCtrl = app.controller("addCtrl", function ($scope, $firebaseArray) {
         var TransID = $scope.TransID;
         var tProduct = $scope.tProduct;
         console.log("tDate:" + tDate);
-        if ($scope.tDate) {
+        if ($scope.tDate && (tTo !== tFrom)) {
             var stockRef = ref.child("Product/" + tProduct + "/Locations/" + tFrom + "/Transfers/");
             var tDate = $scope.tDate;
             stockRef.push({
