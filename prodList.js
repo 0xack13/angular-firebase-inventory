@@ -1,3 +1,12 @@
+$(document).ready(function() {
+    $('.collapse').on('shown.bs.collapse', function(){
+        $(this).parent().find(".glyphicon-plus").removeClass("glyphicon-plus").addClass("glyphicon-minus");
+    }).on('hidden.bs.collapse', function(){
+        $(this).parent().find(".glyphicon-minus").removeClass("glyphicon-minus").addClass("glyphicon-plus");
+    });
+    console.log("written");
+});
+
 var app = angular.module("sampleApp", ["firebase"]);
 
 
@@ -189,3 +198,5 @@ var addProductCtrl = app.controller("addProductCtrl", function ($scope, $firebas
         }
     };
 });
+
+

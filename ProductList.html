@@ -12,6 +12,7 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
 
     <script src="prodList.js"></script>
+    <link rel="stylesheet" href="style.css">
 
 </head>
 
@@ -59,18 +60,18 @@
       </div>
     </nav>
 <br><br><br>
-    <div class="container">
-
-
-    <div class="panel panel-default">
+    <div class="container" id="accordion">
+    <div class="panel panel-default" >
     <div class="panel-heading">
-      <h3 class="panel-title">
-         Products List
-      </h3>
+      <h4 class="panel-title">
+         <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseProductList"><span class="glyphicon glyphicon-minus"></span>
+Products List</a>
+      </h4>
     </div>
     
+    <div id="collapseProductList" class="panel-collapse collapse in">
     <div class="panel-body"> 
-
+    
         <table class="table table-striped table-bordered table-condensed">
             <tr class="products">
                 <th scope="col" title="Name">Name</th>
@@ -103,18 +104,22 @@
         </div>
         </div>
         </div>
+        </div>
    
     
 <!-- Product Panel -->
 <div ng-controller="addProductCtrl" class="container">
 
-<div id="product" onclick="$('#product').toggle();" class="panel panel-default" data-toggle="collapse">
+<div onclick="$('#product').toggle();" class="panel panel-default" data-toggle="collapse">
    <div class="panel-heading">
-      <h3 class="panel-title">
-         Add New Product
-      </h3>
+      <h4 class="panel-title">
+         <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseAddProduct"><span class="glyphicon glyphicon-minus"></span>
+Add New Product</a>
+      </h4>
    </div>
-   <div class="panel-body">
+
+       <div id="collapseAddProduct" class="panel-collapse collapse in">
+    <div class="panel-body">
         <div class="form-group">
           <form ng-submit="submit()" ng-controller="addProductCtrl" class="form-group">
             Product Name:
@@ -139,8 +144,8 @@
     </div>
     </div>
 
-    </div>
-
+</div>
+</div>
 
 
 
@@ -149,10 +154,12 @@
 
 <div class="panel panel-default">
    <div class="panel-heading">
-      <h3 class="panel-title">
-         Add New Transfer
-      </h3>
+      <h4 class="panel-title">
+         <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseAddProductTransfer"><span class="glyphicon glyphicon-minus"></span>
+Add Product Transfer</a>
+      </h4>
    </div>
+   <div id="collapseAddProductTransfer" class="panel-collapse collapse in">
    <div class="panel-body">
         <div class="form-group">
           <form ng-submit="submit()" ng-controller="addTransferCtrl" class="form-group">
@@ -183,6 +190,10 @@
       </div>
     </div>
     </div>
+    </div>
+    </div>
+    </div>
+
 
     </div>
 
