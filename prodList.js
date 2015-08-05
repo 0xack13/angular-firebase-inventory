@@ -22,9 +22,12 @@ app.controller("ListCtrl", function ($scope, $firebaseArray) {
 
 
     ref.child("Product").on("value", function (snapshot) {
+        console.log("Snapshot: " + snapshot.val());
+        $scope.$apply(function() {
+            $scope.productsList = snapshot.val();
+            productsList = $scope.productsList;
+        });
 
-        $scope.productsList = snapshot.val();
-        productsList = $scope.productsList;
 
         angular.forEach(productsList, function (value, key) {
             console.log("The product details of " + key 
@@ -43,14 +46,15 @@ app.controller("ListCtrl", function ($scope, $firebaseArray) {
             return obj;
         }
 
-        return Object.keys(obj).map(function (key) {
+        return Object.keys(obj).map(function (key, value) {
             return Object.defineProperty(obj[key], '$key', {__proto__: null, value: key});
+            
         });
     }
 });
 
 
-var addCtrl = app.controller("addCtrl", function ($scope, $firebaseArray) {
+var addTransferCtrl = app.controller("addTransferCtrl", function ($scope, $firebaseArray) {
      var ref = new Firebase("https://inven.firebaseio.com");
      var productsList, kCity;
 
@@ -134,4 +138,54 @@ var deleteCtrl = app.controller("deleteCtrl", function ($scope, $firebaseArray) 
 var updateCtrl = app.controller("updateCtrl", function ($scope, $firebaseArray) {
      var ref = new Firebase("https://inven.firebaseio.com");
 
+});
+
+
+var addProductCtrl = app.controller("addProductCtrl", function ($scope, $firebaseArray) {
+     var ref = new Firebase("https://inven.firebaseio.com");
+     var productsList, kCity;
+
+    $scope.messages = $firebaseArray(ref);
+
+    $scope.selectAction = function() {
+        console.log($scope.tFrom);
+    };
+    
+    ref.child("Product").on("value", function (snapshot) {
+        $scope.productsList = snapshot.val();
+        console.log($scope.productsList);
+        $scope.messages = $firebaseArray(ref);
+        $scope.userType = "guest123";
+    });
+
+    ref.child("Cities").on("value", function (snapshot) {
+        $scope.cities = snapshot.val();
+        console.log($scope.cities.id);
+    });
+
+    $scope.filterToCity = function (kToCity) {
+        console.log("Filter: " + kToCity);
+        return "Hello";
+    }
+
+    $scope.submit = function () {
+        var tDate = $scope.tDate;
+        var tFrom = $scope.tFrom;
+        var tQuantity = $scope.tQuantity;
+        var tTo = $scope.tTo;
+        var TransID = $scope.TransID;
+        var tProduct = $scope.tProduct;
+        console.log("tDate:" + tDate);
+        if ($scope.tDate && (tTo !== tFrom)) {
+            var stockRef = ref.child("Product/" + tProduct + "/Locations/" + tFrom + "/Transfers/");
+            var tDate = $scope.tDate;
+            stockRef.push({
+                "Date": tDate,
+                "From": tFrom,
+                "Quantity": tQuantity,
+                "To": tTo,
+                "TransID": TransID
+            });
+        }
+    };
 });
