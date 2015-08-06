@@ -9,15 +9,27 @@ $(document).ready(function() {
 
 var app = angular.module("sampleApp", ["firebase", "ngFileUpload", "ngResource", "ngRoute"]);
 
+// Needed routes:
+// 
 app.config(function ($routeProvider, $locationProvider) {
             $routeProvider.
                     when('/upload', {
                         templateUrl: 'upload.html',
-                        controller: 'uploadCtrl'
+                        controller: 'uploadCtrl',
+                        activetab: 'upload'
                     }).
-                    when('list', {
+                    when('/list', {
                         templateUrl: './partials/list.html',
-                        controller: 'ListCtrl'
+                        controller: 'ListCtrl',
+                        activetab: 'list'
+                    }).
+                    when('/transfer', {
+                        templateUrl: './partials/addTransfer.html',
+                        controller: 'addTransferCtrl'
+                    }).
+                    when('/product', {
+                        templateUrl: './partials/addProduct',
+                        controller: 'addProductCtrl'
                     });
             //$locationProvider.html5Mode(true);
 });
@@ -31,9 +43,28 @@ Multiple Controllers:
 
 */
 
+app.controller("menuCtrl", function ($scope, $firebaseArray, $route) {
+    console.log("Menu!!");
+    $scope.$route = $route;
+    console.log("Route: " + $route.current);
+    $scope.isActive = function (viewLocation) {
+         var active = (viewLocation === $scope.$route.current.activetab);
+         console.log("Active is : " + active);
+         return active;
+    };
+});
+
+
 //Creating multpile controllers for each function
-app.controller("ListCtrl", function ($scope, $firebaseArray) {
+app.controller("ListCtrl", function ($scope, $firebaseArray, $route) {
+    $scope.$route = $route;
+    console.log("Route: " + $scope.$route.current.activetab + ($route.current.activetab == 'list'));
     var productsList;
+    $scope.isActive = function (viewLocation) {
+         var active = (viewLocation === $scope.$route.current.activetab);
+         console.log("Active is : " + active);
+         return active;
+    };
     $scope.query = '';
     var ref = new Firebase("https://inven.firebaseio.com");
 
@@ -53,26 +84,29 @@ app.controller("ListCtrl", function ($scope, $firebaseArray) {
         });
     });
 
-})
-.filter('toArray', function () {
-    'use strict';
+    }).filter('toArray', function () {
+        'use strict';
 
-    return function (obj) {
-        if (!(obj instanceof Object)) {
-            return obj;
+        return function (obj) {
+            if (!(obj instanceof Object)) {
+                return obj;
+            }
+
+            return Object.keys(obj).map(function (key, value) {
+                return Object.defineProperty(obj[key], '$key', {__proto__: null, value: key});
+                
+            });
         }
-
-        return Object.keys(obj).map(function (key, value) {
-            return Object.defineProperty(obj[key], '$key', {__proto__: null, value: key});
-            
-        });
-    }
 });
 
 
 var addTransferCtrl = app.controller("addTransferCtrl", function ($scope, $firebaseArray) {
      var ref = new Firebase("https://inven.firebaseio.com");
      var productsListTrans, kCity;
+
+    function widgetsController($scope, $route) {
+        $scope.$route = $route;
+    }
 
     $scope.messages = $firebaseArray(ref);
 
@@ -172,6 +206,10 @@ var uploadCtrl = app.controller('addUploadCtrl', ['$scope', 'Upload', '$timeout'
         $scope.upload([$scope.file]);
     });
     $scope.log = '';
+
+    function widgetsController($scope, $route) {
+        $scope.$route = $route;
+    }
 
     console.log("I'm in the upload part!");
 
