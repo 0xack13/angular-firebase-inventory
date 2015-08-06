@@ -1,0 +1,39 @@
+ <!-- Product Panel -->
+    <div ng-controller="addProductCtrl" class="container">
+
+    <div onclick="$('#product').toggle();" class="panel panel-default" data-toggle="collapse">
+       <div class="panel-heading">
+          <h4 class="panel-title">
+             <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseAddProduct"><span class="glyphicon glyphicon-plus"></span>
+    Add New Product</a>
+          </h4>
+       </div>
+
+           <div id="collapseAddProduct" class="panel-collapse collapse out">
+        <div class="panel-body">
+            <div class="form-group">
+              <form ng-submit="submit()" ng-controller="addProductCtrl" class="form-group">
+                Product Name:
+                <select data-ng-model="tProduct" class="form-control" ng-change="selectAction()" 
+                    data-ng-options="kProduct as kProduct for (kProduct,vProduct) in productsList" value="{{kProduct}}">                
+                </select>
+                <br>
+                Description:
+                <input class="form-control" type="text" ng-model="tDate" name="tDate" />
+                <br>
+                Location :<select class="form-control"  data-ng-model="tFrom" ng-change="selectAction()" name="tFrom" data-ng-options="kCity as kCity for (kCity, vProduct) in cities" value="{{kCity}}">                
+                </select>
+                <br>
+                Stock:<input type="text" class="form-control"  ng-model="tQuantity" name="tQuantity" />
+                <br>
+          <input type="submit" id="submit" value="submit"  class="btn btn-lg btn-success" />
+          
+        </form>
+            <div>
+            </div>
+          </div>
+        </div>
+        </div>
+
+    </div>
+    </div>

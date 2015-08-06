@@ -7,8 +7,20 @@ $(document).ready(function() {
     console.log("written");
 });
 
-var app = angular.module("sampleApp", ["firebase"]);
+var app = angular.module("sampleApp", ["firebase", "ngFileUpload", "ngResource", "ngRoute"]);
 
+app.config(function ($routeProvider, $locationProvider) {
+            $routeProvider.
+                    when('/upload', {
+                        templateUrl: 'upload.html',
+                        controller: 'uploadCtrl'
+                    }).
+                    when('list', {
+                        templateUrl: './partials/list.html',
+                        controller: 'ListCtrl'
+                    });
+            //$locationProvider.html5Mode(true);
+});
 
 /*
 Multiple Controllers:
@@ -27,15 +39,10 @@ app.controller("ListCtrl", function ($scope, $firebaseArray) {
 
     $scope.messages = $firebaseArray(ref);
 
-   
-
-
     ref.child("Product").on("value", function (snapshot) {
         console.log("Snapshot: " + snapshot.val());
-        $scope.$apply(function() {
-            $scope.productsList = snapshot.val();
-            productsList = $scope.productsList;
-        });
+        $scope.productsList = snapshot.val();
+        productsList = $scope.productsList;
 
 
         angular.forEach(productsList, function (value, key) {
@@ -65,7 +72,7 @@ app.controller("ListCtrl", function ($scope, $firebaseArray) {
 
 var addTransferCtrl = app.controller("addTransferCtrl", function ($scope, $firebaseArray) {
      var ref = new Firebase("https://inven.firebaseio.com");
-     var productsList, kCity;
+     var productsListTrans, kCity;
 
     $scope.messages = $firebaseArray(ref);
 
@@ -74,10 +81,8 @@ var addTransferCtrl = app.controller("addTransferCtrl", function ($scope, $fireb
     };
     
     ref.child("Product").on("value", function (snapshot) {
-        $scope.productsList = snapshot.val();
-        console.log($scope.productsList);
-        $scope.messages = $firebaseArray(ref);
-        $scope.userType = "guest123";
+        $scope.productsListTrans = snapshot.val();
+        console.log($scope.productsListTrans);
     });
 
     ref.child("Cities").on("value", function (snapshot) {
@@ -121,7 +126,8 @@ var addTransferCtrl = app.controller("addTransferCtrl", function ($scope, $fireb
         var TransID = $scope.TransID;
         var tProduct = $scope.tProduct;
         console.log("tDate:" + tDate);
-        if ($scope.tDate && (tTo !== tFrom)) {
+        if ($scope.tDate) {
+            console.log("Reached Add Transfer Controller if statement!")
             var stockRef = ref.child("Product/" + tProduct + "/Locations/" + tFrom + "/Transfers/");
             var tDate = $scope.tDate;
             stockRef.push({
@@ -151,52 +157,44 @@ var updateCtrl = app.controller("updateCtrl", function ($scope, $firebaseArray) 
 
 
 var addProductCtrl = app.controller("addProductCtrl", function ($scope, $firebaseArray) {
-     var ref = new Firebase("https://inven.firebaseio.com");
-     var productsList, kCity;
-
-    $scope.messages = $firebaseArray(ref);
-
-    $scope.selectAction = function() {
-        console.log($scope.tFrom);
-    };
-    
-    ref.child("Product").on("value", function (snapshot) {
-        $scope.productsList = snapshot.val();
-        console.log($scope.productsList);
-        $scope.messages = $firebaseArray(ref);
-        $scope.userType = "guest123";
-    });
-
-    ref.child("Cities").on("value", function (snapshot) {
-        $scope.cities = snapshot.val();
-        console.log($scope.cities.id);
-    });
-
-    $scope.filterToCity = function (kToCity) {
-        console.log("Filter: " + kToCity);
-        return "Hello";
-    }
-
-    $scope.submit = function () {
-        var tDate = $scope.tDate;
-        var tFrom = $scope.tFrom;
-        var tQuantity = $scope.tQuantity;
-        var tTo = $scope.tTo;
-        var TransID = $scope.TransID;
-        var tProduct = $scope.tProduct;
-        console.log("tDate:" + tDate);
-        if ($scope.tDate && (tTo !== tFrom)) {
-            var stockRef = ref.child("Product/" + tProduct + "/Locations/" + tFrom + "/Transfers/");
-            var tDate = $scope.tDate;
-            stockRef.push({
-                "Date": tDate,
-                "From": tFrom,
-                "Quantity": tQuantity,
-                "To": tTo,
-                "TransID": TransID
-            });
-        }
-    };
+     //TBD
 });
 
 
+
+
+//Upload Controller
+var uploadCtrl = app.controller('addUploadCtrl', ['$scope', 'Upload', '$timeout', function ($scope, Upload, $timeout) {
+    $scope.$watch('files', function () {
+        $scope.upload($scope.files);
+    });
+    $scope.$watch('file', function () {
+        $scope.upload([$scope.file]);
+    });
+    $scope.log = '';
+
+    console.log("I'm in the upload part!");
+
+    $scope.upload = function (files) {
+        if (files && files.length) {
+            for (var i = 0; i < files.length; i++) {
+                var file = files[i];
+                Upload.upload({
+                    url: 'https://angular-file-upload-cors-srv.appspot.com/upload',
+                    fields: {
+                        'username': $scope.username
+                    },
+                    file: file
+                }).progress(function (evt) {
+                    var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
+                    $scope.log = 'progress: ' + progressPercentage + '% ' +
+                                evt.config.file.name + '\n' + $scope.log;
+                }).success(function (data, status, headers, config) {
+                    $timeout(function() {
+                        $scope.log = 'file: ' + config.file.name + ', Response: ' + JSON.stringify(data) + '\n' + $scope.log;
+                    });
+                });
+            }
+        }
+    };
+}]);

@@ -1,0 +1,47 @@
+     
+<div ng-controller="addUploadCtrl" class="container">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h4 class="panel-title">
+                <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseUpload">
+                    <span class="glyphicon glyphicon-minus"></span> Upload
+                </a>
+            </h4>
+        </div>
+        <div id="collapseUpload" class="panel-collapse collapse in">
+            <div class="panel-body">
+                <div class="form-group">
+                    <div ng-app="fileUpload" ng-controller="addUploadCtrl">Username
+                    
+                        <input type="text" ng-model="username">
+                        </br>
+                    </br>
+                    watching model:
+                    
+                    <div class="button" ngf-select ng-model="file" ngf-multiple="false">Select File</div>
+                    on file change multiple:
+                    
+                    <div class="button" ngf-select ngf-change="upload($files)" ngf-multiple="true">Select File</div>
+                    Drop File:
+                    
+                    <div ngf-drop ngf-select ng-model="files" class="drop-box" 
+                        ngf-drag-over-class="dragover" ngf-multiple="true" ngf-allow-dir="true"
+                        accept="image/*,application/pdf">Drop pdfs or images here or click to upload</div>
+                    <div ngf-no-file-drop>File Drag/Drop is not supported for this browser</div>
+                    Files:
+                    
+                    <ul>
+                        <li ng-repeat="f in files" style="font:smaller">{{f.name}}</li>
+                    </ul>
+                    Upload Log:
+                    
+                    <pre>{{log}}</pre>
+                </div>
+            </div>
+        </div>
+        <br>
+            <input type="submit" id="submit" value="submit"  class="btn btn-lg btn-success" />
+        </form>
+        <div></div>
+    </div>
+</div>
